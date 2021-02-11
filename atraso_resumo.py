@@ -80,6 +80,7 @@ def plot_delay_line(top,lines_order,delay_order,company_order,companies):
 
 
 	plt.ylabel("Horas",fontsize=20)
+	plt.xlabel("Linhas",fontsize=20)
 	plt.xticks(rotation='vertical')
 	plt.yticks(fontsize=20)
 
