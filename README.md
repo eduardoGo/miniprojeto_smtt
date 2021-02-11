@@ -27,6 +27,14 @@ python3 atraso_resumo.py
 python3 empresa_resumo.py
 ```
 
+## Exemplo de gráficos gerados
+
+Resumo dos atrasos
+![](../atraso_resumo.png)
+
+Resumo das empresas
+![](../empresa_resumo.png)
+
 ## Meta
 
 Eduardo Gomes – egsantos128@gmail.com
