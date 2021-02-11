@@ -29,7 +29,7 @@ python3 empresa_resumo.py
 
 ## Meta
 
-Seu Nome – [@Eduardo](https://twitter.com/...) – egsantos128@gmail.com
+Eduardo Gomes – egsantos128@gmail.com
 
 [https://github.com/eduardoGo/miniprojeto_smtt](https://github.com/eduardoGo/)
 
