@@ -29,10 +29,10 @@ python3 empresa_resumo.py
 
 ## Exemplo de gráficos gerados
 
-# Resumo dos atrasos
+#### Resumo dos atrasos
 ![](atraso_resumo.png)
 
-# Resumo das empresas
+#### Resumo das empresas
 ![](empresa_resumo.png)
 
 ## Meta
