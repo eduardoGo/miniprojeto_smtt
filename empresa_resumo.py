@@ -87,8 +87,6 @@ def plot_not_travels(companies_not_travels):
 def plot_median_delays(companies_delays):
 
 	mean_delays = {}
-	std_delays = {}
-
 	
 	for company in companies_delays:
 		mean_delays[company] = np.median(companies_delays[company])
@@ -125,7 +123,11 @@ def plot_boxplot_delays(companies_delays):
 
 	plt.title('Box plot dos atrasos\npor empresa')
 	plt.boxplot([companies_delays[company] for company in companies_delays],labels=[list(companies_delays.keys())[i].split(' ')[0] for i in range(len(companies_delays)) ] )
-	
+	plt.xlabel('Primeiro nome da empresa',fontsize=20)
+	plt.xticks(fontsize=15)
+
+	plt.ylabel('Minutos',fontsize=20)
+	plt.yticks(fontsize=15)
 
 def review_company(data):
 
@@ -152,114 +154,10 @@ def review_company(data):
 
 	plt.show()
 
-#---------------------------------------------------------------------------------
-
-
-def line_delay(data,top):
-	
-	#Dicionário no formado {num. da linha: atraso acumulado}
-	lines_delay = {}
-
-	#Dicionário no formado {num. da linha: empresa responsável}
-	lines_company = {}
-
-	#Dicionario no formato {empresa:[cor,flag para indicar se ja foi usado]}. Será útil para plotar o gráfico depois.
-	companies = {}
-	
-
-	for i in range(len(data['numero_linha'].values)):
-		
-		current_line = str(data['numero_linha'][i])
-		current_company = data['empresa'][i]
-		
-		#Se data['duracao_realizada'][i] é NaN, a condição do IF se torna falsa, e portanto não entra no IF.
-		if data['duracao_prevista'][i] < data['duracao_realizada'][i]:
-
-			#verifica se a chave já existe no dicionário. Se não existe, adiciona.
-			if not current_line in lines_delay:
-				lines_delay[current_line] = 0
-
-			#verifica se a chave já existe no dicionário. Se não existe, adiciona.
-			if not current_line in lines_company:
-				lines_company[current_line] = current_company
-
-			if not current_company in companies:
-				companies[current_company] = [(random.random(),random.random(),random.random()),False] #Cor em RGB
-
-			lines_delay[current_line] += (data['duracao_realizada'][i]-data['duracao_prevista'][i])/60
-
-
-	lines_order = sorted(lines_delay,key=lines_delay.get)
-	delay_order = sorted(lines_delay.values())
-	company_order = [lines_company[x] for x in lines_order]
-
-	company_order.reverse()
-	lines_order.reverse()
-	delay_order.reverse()
-
-	plt.subplot(121)
-
-	if top == -1:
-		plt.title("Atraso por linha\nIda+Volta",fontsize=20)
-		top = len(lines_order)
-	else:
-		plt.title("(TOP "+str(top)+")\nAtraso por linha\nIda+Volta",fontsize=20)
-
-	handles = plt.bar(lines_order[:top],delay_order[:top],width=0.5)
-	
-	#Loop para remover legendas duplicadas no gráfico.
-	filter_handles = []
-	colors = []
-	for i in range(len(handles)):
-		
-		#Se é a primeira vez que a empresa vai apareer no gráfico, então a gente filtra, pra depois não aparecer legenda repetida
-		if not companies[company_order[i]][1]:
-			companies[company_order[i]][1] = True
-			filter_handles.append(i)
-			colors.append(companies[company_order[i]][0])
-		handles[i].set_color(companies[company_order[i]][0])
-
-
-
-	plt.ylabel("Horas",fontsize=20)
-	plt.xticks(rotation='vertical')
-	plt.yticks(fontsize=20)
-
-	plt.legend(handles=[handles[x] for x in filter_handles],labels=[company_order[x] for x in filter_handles],fontsize=10)
-	#plt.show()
-	plt.subplot(122)
-
-	#dicionário no formato {empresa: quantidade de vezes que aparece no pódio}
-	top_companies = {}
-
-	for i in range(top):
-		if not company_order[i] in top_companies:
-			top_companies[company_order[i]] = 0
-
-		top_companies[company_order[i]] += 1
-
-	plt.title("Participação no pódio\npor empresa")
-	plt.pie(x = top_companies.values(),labels=top_companies.keys(),autopct='%1.1f%%',
-        shadow=True, startangle=90,colors=colors)
-	plt.show()
-	
-def review_line_perDelay(data):
-	top = int(input("Tamanho do pódio (-1 se máximo): "))
-	line_delay(data,top)
-
-
 
 def main():
 	data = read_data()
-	
-	while True:
-
-		option = int(input("1. Resumo de acordo com a empresa\n2. Resumo de acordo com atrasos\nEscolha sua opção: "))
-		
-		if option == 1:
-			review_company(data)
-		else:
-			review_line_perDelay(data)
+	review_company(data)
 
 main()
 
